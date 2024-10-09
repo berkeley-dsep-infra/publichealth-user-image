@@ -18,7 +18,7 @@ class_libs = c(
   "measurements", "1.4.0",
   "dagitty", "0.3-0",
   "cowplot", "1.1.1",
-  "patchwork", "1.1.1",
+  "patchwork", "1.3.0",
   "tigris", "1.0",
   "googlesheets4", "1.0.0",
   "coxed", "0.3.3"
