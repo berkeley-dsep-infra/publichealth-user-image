@@ -1,16 +1,39 @@
+channels:
+- conda-forge
+
 dependencies:
-- pip
-- syncthing==1.18.6
-- jupyter-server-proxy==4.2.0
-- jupyter-rsession-proxy==2.2.0
+# Items required for basic level functionality
+- gh-scoped-creds==4.1
+- git==2.47.0
+- jupyter-resource-usage==1.1.0
+- jupyter_server==2.14.2
+- jupyterhub==4.1.6
+- jupyterlab==4.2.5
+- jupyterlab-git==0.50.1
+- jupytext==1.16.4
+- nbgitpuller==1.2.1
+- notebook==7.2.2
+- python==3.11.*
+
+# Other items
+- jupyter-server-proxy==4.4.0
+- syncthing==1.27.12
+- jupyter-rsession-proxy==2.2.1
+- jupyter-syncthing-proxy==1.0.3
+- traitlets==5.14.3
+- appmode==1.0.0
+
+# pip installed packages, conda is preferred
+- pip==24.2
 - pip:
-  # bug w/notebook and traitlets: https://github.com/jupyter/notebook/issues/7048
-  - traitlets==5.9.0
   # RStudio support
   - otter-grader==2.2.7
   # for notebook exporting
   - nbconvert[webpdf]==7.16.4
   - nb2pdf==0.6.2
   - nbpdfexport==0.2.1
-  # pulled in by ottr, if not pinned to 1.16.2, 1.16.3 causes DH-323
-  - jupytext==1.16.2
+  - jupyter-archive==3.4.0
+  - rise==5.7.1
+  - git+https://github.com/shaneknapp/python-popularity-contest.git@add-error-handling
+  - git-credential-helpers==0.2
+  - jupyter-tree-download==1.0.1
