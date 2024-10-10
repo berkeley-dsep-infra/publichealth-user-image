@@ -54,8 +54,8 @@ RUN apt-get update > /dev/null && \
 COPY install-mambaforge.bash /tmp/install-mambaforge.bash
 RUN /tmp/install-mambaforge.bash
 
-RUN chown -Rh rstudio:rstudio /home/rstudio
-RUN chown -Rh rstudio:rstudio /srv/conda
+# needed for building on mac see DH-394
+RUN chown -Rh ${NB_USER}:${NB_USER} ${HOME}
 
 USER ${NB_USER}
 
@@ -91,5 +91,9 @@ RUN r /tmp/r-packages/2021-spring-phw-272a.r
 
 # Use simpler locking strategy
 COPY file-locks /etc/rstudio/file-locks
+
+# Doing a little cleanup
+RUN rm -rf /tmp/downloaded_packages
+RUN rm -rf ${HOME}/.cache
 
 ENTRYPOINT ["tini", "--"]

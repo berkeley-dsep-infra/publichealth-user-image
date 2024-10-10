@@ -37,6 +37,6 @@ rm ${INSTALLER_PATH}
 # Remove the pip cache created as part of installing mambaforge
 rm -rf /root/.cache
 
-chown -R $NB_USER:$NB_USER ${CONDA_DIR}
+chown -Rh $NB_USER:$NB_USER ${CONDA_DIR}
 
 conda list -n root
