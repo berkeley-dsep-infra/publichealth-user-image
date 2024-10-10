@@ -54,14 +54,14 @@ RUN apt-get update > /dev/null && \
 COPY install-mambaforge.bash /tmp/install-mambaforge.bash
 RUN /tmp/install-mambaforge.bash
 
+# needed for building on mac see DH-394
+RUN chown -Rh ${NB_USER}:${NB_USER} ${HOME}
+
 USER ${NB_USER}
 
 COPY environment.yml /tmp/environment.yml
 RUN mamba env update -p ${CONDA_DIR} -f /tmp/environment.yml && \
     mamba clean -afy
-
-COPY infra-requirements.txt /tmp/infra-requirements.txt
-RUN pip install --no-cache-dir -r /tmp/infra-requirements.txt
 
 # DH-331, very similar to what was done for datahub in DH-164
 ENV PLAYWRIGHT_BROWSERS_PATH ${CONDA_DIR}
@@ -73,12 +73,6 @@ RUN R --quiet -e "install.packages('IRkernel', quiet = TRUE)" && \
 
 COPY class-libs.R /tmp/class-libs.R
 RUN mkdir -p /tmp/r-packages
-
-# Workaround to install ottr, issue 3342
-#RUN wget https://github.com/ucbds-infra/ottr/archive/refs/tags/0.1.0.tar.gz -O /tmp/ottr.tar.gz && R CMD INSTALL /tmp/ottr.tar.gz && rm /tmp/ottr.tar.gz
-
-#COPY install.R /tmp/install.R
-#RUN /tmp/install.R && rm -rf /tmp/downloaded_packages
 
 COPY r-packages/ottr.r /tmp/r-packages/
 RUN r /tmp/r-packages/ottr.r
@@ -97,5 +91,9 @@ RUN r /tmp/r-packages/2021-spring-phw-272a.r
 
 # Use simpler locking strategy
 COPY file-locks /etc/rstudio/file-locks
+
+# Doing a little cleanup
+RUN rm -rf /tmp/downloaded_packages
+RUN rm -rf ${HOME}/.cache
 
 ENTRYPOINT ["tini", "--"]
