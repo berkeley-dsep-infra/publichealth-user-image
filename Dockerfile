@@ -51,8 +51,8 @@ RUN apt-get update > /dev/null && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY install-mambaforge.bash /tmp/install-mambaforge.bash
-RUN /tmp/install-mambaforge.bash
+COPY install-miniforge.bash /tmp/install-miniforge.bash
+RUN /tmp/install-miniforge.bash
 
 # needed for building on mac see DH-394
 RUN chown -Rh ${NB_USER}:${NB_USER} ${HOME}
@@ -60,7 +60,7 @@ RUN chown -Rh ${NB_USER}:${NB_USER} ${HOME}
 USER ${NB_USER}
 
 COPY environment.yml /tmp/environment.yml
-RUN mamba env update -p ${CONDA_DIR} -f /tmp/environment.yml && \
+RUN mamba env update -q -p ${CONDA_DIR} -f /tmp/environment.yml && \
     mamba clean -afy
 
 # DH-331, very similar to what was done for datahub in DH-164
