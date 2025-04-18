@@ -96,4 +96,9 @@ COPY file-locks /etc/rstudio/file-locks
 RUN rm -rf /tmp/downloaded_packages
 RUN rm -rf ${HOME}/.cache
 
+USER root
+ENV REPO_DIR=/srv/repo
+COPY --chown=${NB_USER}:${NB_USER} image-tests ${REPO_DIR}/image-tests
+USER ${NB_USER}
+
 ENTRYPOINT ["tini", "--"]
