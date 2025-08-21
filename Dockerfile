@@ -89,6 +89,9 @@ RUN r /tmp/r-packages/ph-252.r
 COPY r-packages/2021-spring-phw-272a.r /tmp/r-packages/
 RUN r /tmp/r-packages/2021-spring-phw-272a.r
 
+COPY r-packages/ph-251b.r /tmp/r-packages/
+RUN r /tmp/r-packages/ph-251b.r
+
 # Use simpler locking strategy
 COPY file-locks /etc/rstudio/file-locks
 
